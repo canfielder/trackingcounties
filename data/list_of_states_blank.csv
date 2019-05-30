@@ -1,0 +1,52 @@
+,NAME,STUSPS,GEOID,Visited
+1,Alabama,AL,1,1
+2,Alaska,AK,2,0
+3,Arizona,AZ,4,1
+4,Arkansas,AR,5,0
+5,California,CA,6,1
+6,Colorado,CO,8,0
+7,Connecticut,CT,9,1
+8,Delaware,DE,10,1
+9,District of Columbia,DC,11,1
+10,Florida,FL,12,1
+11,Georgia,GA,13,1
+12,Hawaii,HI,15,0
+13,Idaho,ID,16,0
+14,Illinois,IL,17,0
+15,Indiana,IN,18,0
+16,Iowa,IA,19,1
+17,Kansas,KS,20,0
+18,Kentucky,KY,21,0
+19,Louisiana,LA,22,0
+20,Maine,ME,23,1
+21,Maryland,MD,24,1
+22,Massachusetts,MA,25,1
+23,Michigan,MI,26,1
+24,Minnesota,MN,27,0
+25,Mississippi,MS,28,0
+26,Missouri,MO,29,0
+27,Montana,MT,30,0
+28,Nebraska,NE,31,0
+29,Nevada,NV,32,1
+30,New Hampshire,NH,33,1
+31,New Jersey,NJ,34,1
+32,New Mexico,NM,35,0
+33,New York,NY,36,1
+34,North Carolina,NC,37,1
+35,North Dakota,ND,38,0
+36,Ohio,OH,39,1
+37,Oklahoma,OK,40,0
+38,Oregon,OR,41,0
+39,Pennsylvania,PA,42,1
+40,Rhode Island,RI,44,1
+41,South Carolina,SC,45,1
+42,South Dakota,SD,46,0
+43,Tennessee,TN,47,1
+44,Texas,TX,48,1
+45,Utah,UT,49,0
+46,Vermont,VT,50,1
+47,Virginia,VA,51,1
+48,Washington,WA,53,0
+49,West Virginia,WV,54,1
+50,Wisconsin,WI,55,0
+51,Wyoming,WY,56,0
