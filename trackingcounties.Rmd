@@ -20,22 +20,10 @@ The following libraries were used.
 
 ```{r library_calls, message=FALSE, warning=FALSE}
 #Library Calls
-if (!require(tidyverse)) {install.packages('tidyverse')} 
-library(tidyverse)
-if (!require(broom)) {install.packages('broom')} 
-library(broom)
-if (!require(tigris)) {install.packages('tigris')} 
-library(tigris)
-if (!require(leaflet)) {install.packages('leaflet')} 
-library(leaflet)
-if (!require(ggthemes)) {install.packages('ggthemes')} 
-library(ggthemes)
-if (!require(RColorBrewer)) {install.packages('RColorBrewer')} 
-library(RColorBrewer)
-if (!require(grid)) {install.packages('grid')} 
-library(grid)
-if (!require(gridExtra)) {install.packages('gridExtra')} 
-library(gridExtra)
+if (!require(pacman)) {install.packages('pacman')} 
+library(pacman)
+
+p_load(broom, grid, gridExtra, ggthemes, leaflet, RColorBrewer, tidyverse, tigris)
 
 options(tigris_use_cache = TRUE)
 ```
@@ -64,9 +52,6 @@ state_list_blank<- state.sp@data %>%
 state.sp@data$id <- rownames(state.sp@data)
 
 state_points <- tidy(state.sp)
-
-class(state.df$id)
-class(state.sp@data$id)
 
 state.df <- state_points %>%
   left_join(y = state.sp@data, by = "id") %>% 
