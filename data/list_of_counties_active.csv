@@ -1,4 +1,23 @@
 ,state,state_code,state_name,county_code,county,Visited,date
+2781,UT,49,Utah,3,Box Elder County,1,5/24/2019
+2785,UT,49,Utah,11,Davis County,1,5/24/2019
+2797,UT,49,Utah,35,Salt Lake County,1,5/24/2019
+2808,UT,49,Utah,57,Weber County,1,5/24/2019
+2791,UT,49,Utah,23,Juab County,1,5/25/2019
+2793,UT,49,Utah,27,Millard County,1,5/25/2019
+2795,UT,49,Utah,31,Piute County,1,5/25/2019
+2800,UT,49,Utah,41,Sevier County,1,5/25/2019
+2804,UT,49,Utah,49,Utah County,1,5/25/2019
+2807,UT,49,Utah,55,Wayne County,1,5/25/2019
+2801,UT,49,Utah,43,Summit County,1,5/26/2019
+2460,TN,47,Tennessee,59,Greene County,1,6/29/2019
+1183,ME,23,Maine,9,Hancock County,1,8/10/2019
+1184,ME,23,Maine,11,Kennebec County,1,8/10/2019
+1188,ME,23,Maine,19,Penobscot County,1,8/10/2019
+1191,ME,23,Maine,25,Somerset County,1,8/10/2019
+1192,ME,23,Maine,27,Waldo County,1,8/10/2019
+1185,ME,23,Maine,13,Knox County,1,8/13/2019
+1186,ME,23,Maine,15,Lincoln County,1,8/13/2019
 1,AL,1,Alabama,1,Autauga County,0,
 2,AL,1,Alabama,3,Baldwin County,0,
 3,AL,1,Alabama,5,Barbour County,0,
@@ -354,7 +373,6 @@
 353,FL,12,Florida,65,Jefferson County,0,
 354,FL,12,Florida,67,Lafayette County,0,
 355,FL,12,Florida,69,Lake County,0,
-2781,UT,49,Utah,3,Box Elder County,1,5/24/2019
 357,FL,12,Florida,73,Leon County,0,
 358,FL,12,Florida,75,Levy County,0,
 359,FL,12,Florida,77,Liberty County,0,
@@ -1181,16 +1199,9 @@
 1180,ME,23,Maine,3,Aroostook County,0,
 2811,VT,50,Vermont,5,Caledonia County,1,
 1182,ME,23,Maine,7,Franklin County,0,
-1183,ME,23,Maine,9,Hancock County,1,8/10/2019
-1184,ME,23,Maine,11,Kennebec County,1,8/10/2019
-1185,ME,23,Maine,13,Knox County,1,8/13/2019
-1186,ME,23,Maine,15,Lincoln County,1,8/13/2019
 313,CT,9,Connecticut,7,Middlesex County,1,
-1188,ME,23,Maine,19,Penobscot County,1,8/10/2019
 1189,ME,23,Maine,21,Piscataquis County,0,
 1769,NH,33,New Hampshire,7,Coos County,1,
-1191,ME,23,Maine,25,Somerset County,1,8/10/2019
-1192,ME,23,Maine,27,Waldo County,1,8/10/2019
 1193,ME,23,Maine,29,Washington County,0,
 1779,NJ,34,New Jersey,7,Camden County,1,
 1195,MD,24,Maryland,1,Allegany County,0,
@@ -1239,7 +1250,6 @@
 1238,MI,26,Michigan,11,Arenac County,0,
 1239,MI,26,Michigan,13,Baraga County,0,
 1240,MI,26,Michigan,15,Barry County,0,
-2785,UT,49,Utah,11,Davis County,1,5/24/2019
 2814,VT,50,Vermont,11,Franklin County,1,
 1243,MI,26,Michigan,21,Berrien County,0,
 1244,MI,26,Michigan,23,Branch County,0,
@@ -1841,7 +1851,6 @@
 2221,OR,41,Oregon,23,Grant County,1,
 2329,SC,45,South Carolina,23,Chester County,1,
 1842,NY,36,New York,25,Delaware County,0,
-2791,UT,49,Utah,23,Juab County,1,5/25/2019
 2820,VT,50,Vermont,23,Washington County,1,
 2834,VA,51,Virginia,23,Botetourt County,1,
 1846,NY,36,New York,33,Franklin County,0,
@@ -1869,7 +1878,6 @@
 1868,NY,36,New York,77,Otsego County,0,
 2259,PA,42,Pennsylvania,27,Centre County,1,
 2331,SC,45,South Carolina,27,Clarendon County,1,
-2793,UT,49,Utah,27,Millard County,1,5/25/2019
 2822,VT,50,Vermont,27,Windsor County,1,
 2970,WA,53,Washington,27,Grays Harbor County,1,
 1874,NY,36,New York,89,St. Lawrence County,0,
@@ -1895,7 +1903,6 @@
 2225,OR,41,Oregon,31,Jefferson County,1,
 2261,PA,42,Pennsylvania,31,Clarion County,1,
 2333,SC,45,South Carolina,31,Darlington County,1,
-2795,UT,49,Utah,31,Piute County,1,5/25/2019
 1898,NC,37,North Carolina,13,Beaufort County,0,
 1899,NC,37,North Carolina,15,Bertie County,0,
 1900,NC,37,North Carolina,17,Bladen County,0,
@@ -1917,7 +1924,6 @@
 1909,NC,37,North Carolina,35,Catawba County,1,
 2263,PA,42,Pennsylvania,35,Clinton County,1,
 2335,SC,45,South Carolina,35,Dorchester County,1,
-2797,UT,49,Utah,35,Salt Lake County,1,5/24/2019
 2840,VA,51,Virginia,35,Carroll County,1,
 206,CA,6,California,37,Los Angeles County,1,
 1922,NC,37,North Carolina,61,Duplin County,0,
@@ -1943,7 +1949,6 @@
 1796,NJ,34,New Jersey,41,Warren County,1,
 2266,PA,42,Pennsylvania,41,Cumberland County,1,
 2338,SC,45,South Carolina,41,Florence County,1,
-2800,UT,49,Utah,41,Sevier County,1,5/25/2019
 2843,VA,51,Virginia,41,Chesterfield County,1,
 1215,MD,24,Maryland,43,Washington County,1,
 1851,NY,36,New York,43,Herkimer County,1,
@@ -1972,7 +1977,6 @@
 2270,PA,42,Pennsylvania,49,Erie County,1,
 2342,SC,45,South Carolina,49,Hampton County,1,
 1973,NC,37,North Carolina,163,Sampson County,0,
-2804,UT,49,Utah,49,Utah County,1,5/25/2019
 2981,WA,53,Washington,49,Pacific County,1,
 413,GA,13,Georgia,51,Chatham County,1,
 1917,NC,37,North Carolina,51,Cumberland County,1,
@@ -2109,7 +2113,6 @@
 2108,OH,39,Ohio,127,Perry County,0,
 2109,OH,39,Ohio,129,Pickaway County,0,
 2110,OH,39,Ohio,131,Pike County,0,
-2807,UT,49,Utah,55,Wayne County,1,5/25/2019
 2112,OH,39,Ohio,135,Preble County,0,
 2113,OH,39,Ohio,137,Putnam County,0,
 2114,OH,39,Ohio,139,Richland County,0,
@@ -2219,7 +2222,6 @@
 2346,SC,45,South Carolina,57,Lancaster County,1,
 2219,OR,41,Oregon,19,Douglas County,0,
 2220,OR,41,Oregon,21,Gilliam County,0,
-2808,UT,49,Utah,57,Weber County,1,5/24/2019
 2222,OR,41,Oregon,25,Harney County,0,
 2985,WA,53,Washington,57,Skagit County,1,
 2224,OR,41,Oregon,29,Jackson County,0,
@@ -2233,7 +2235,6 @@
 2232,OR,41,Oregon,45,Malheur County,0,
 2347,SC,45,South Carolina,59,Laurens County,1,
 2234,OR,41,Oregon,49,Morrow County,0,
-2460,TN,47,Tennessee,59,Greene County,1,6/29/2019
 2236,OR,41,Oregon,53,Polk County,0,
 2851,VA,51,Virginia,59,Fairfax County,1,
 2986,WA,53,Washington,59,Skamania County,1,
@@ -2750,7 +2751,7 @@
 2749,TX,48,Texas,447,Throckmorton County,0,
 2750,TX,48,Texas,449,Titus County,0,
 2751,TX,48,Texas,451,Tom Green County,0,
-2752,TX,48,Texas,453,Travis County,0,
+2752,TX,48,Texas,453,Travis County,1,10/20/2022
 2753,TX,48,Texas,455,Trinity County,0,
 2754,TX,48,Texas,457,Tyler County,0,
 2755,TX,48,Texas,459,Upshur County,0,
@@ -2799,7 +2800,6 @@
 2798,UT,49,Utah,37,San Juan County,0,
 2799,UT,49,Utah,39,Sanpete County,0,
 2878,VA,51,Virginia,113,Madison County,1,
-2801,UT,49,Utah,43,Summit County,1,5/26/2019
 2802,UT,49,Utah,45,Tooele County,0,
 2803,UT,49,Utah,47,Uintah County,0,
 1887,NY,36,New York,115,Washington County,1,
