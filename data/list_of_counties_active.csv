@@ -263,14 +263,14 @@
 243,CA,6,California,111,Ventura County,0,
 244,CA,6,California,113,Yolo County,0,
 245,CA,6,California,115,Yuba County,0,
-246,CO,8,Colorado,1,Adams County,0,
+246,CO,8,Colorado,1,Adams County,1,12/21/2022
 247,CO,8,Colorado,3,Alamosa County,0,
-248,CO,8,Colorado,5,Arapahoe County,0,
+248,CO,8,Colorado,5,Arapahoe County,1,12/21/2022
 249,CO,8,Colorado,7,Archuleta County,0,
 250,CO,8,Colorado,9,Baca County,0,
 251,CO,8,Colorado,11,Bent County,0,
-252,CO,8,Colorado,13,Boulder County,0,
-253,CO,8,Colorado,14,Broomfield County,0,
+252,CO,8,Colorado,13,Boulder County,1,12/26/2022
+253,CO,8,Colorado,14,Broomfield County,1,12/26/2022
 254,CO,8,Colorado,15,Chaffee County,0,
 255,CO,8,Colorado,17,Cheyenne County,0,
 256,CO,8,Colorado,19,Clear Creek County,0,
@@ -279,7 +279,7 @@
 259,CO,8,Colorado,25,Crowley County,0,
 260,CO,8,Colorado,27,Custer County,0,
 261,CO,8,Colorado,29,Delta County,0,
-262,CO,8,Colorado,31,Denver County,0,
+262,CO,8,Colorado,31,Denver County,1,12/21/2022
 263,CO,8,Colorado,33,Dolores County,0,
 264,CO,8,Colorado,35,Douglas County,0,
 265,CO,8,Colorado,37,Eagle County,0,
@@ -293,7 +293,7 @@
 273,CO,8,Colorado,53,Hinsdale County,0,
 274,CO,8,Colorado,55,Huerfano County,0,
 275,CO,8,Colorado,57,Jackson County,0,
-276,CO,8,Colorado,59,Jefferson County,0,
+276,CO,8,Colorado,59,Jefferson County,1,12/26/2022
 277,CO,8,Colorado,61,Kiowa County,0,
 278,CO,8,Colorado,63,Kit Carson County,0,
 279,CO,8,Colorado,65,Lake County,0,
