@@ -1,0 +1,8 @@
+feather==0.1.2
+geopandas==0.14.1
+jupyter==1.0.0
+numpy==1.20.2
+pandas==1.4.4
+plotnine==0.10.1
+siuba==0.4.4
+./../tracking_counties/dist/tracking_counties-0.0.0-py3-none-any.whl
