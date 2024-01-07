@@ -2,3 +2,12 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# Shapefile Extensions
+*.cpg
+*.dbf
+*.prj
+*.shp
+*.shx
+*.xml
+*.xml
