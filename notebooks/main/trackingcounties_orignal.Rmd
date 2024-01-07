@@ -9,190 +9,73 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#Purpose
-The purpose of this notebook is to visualize the tracking of states and counties visited.
 
-#Setup
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning=FALSE)
+```
+
+
 The following libraries were used.
 
-## Libaries
 ```{r library_calls, message=FALSE, warning=FALSE}
 #Library Calls
-
-# Install pacman if not available
 if (!require(pacman)) {install.packages('pacman')} 
 library(pacman)
 
-# Install and load the following libraries
-pacman::p_load(
-  broom, 
-  glue,
-  grid, 
-  gridExtra, 
-  ggthemes, 
-  here, 
-  leaflet, 
-  RColorBrewer, 
-  sf, 
-  tidyverse
-  )
+p_load(broom, grid, gridExtra, ggthemes, leaflet, RColorBrewer, tidyverse, tigris)
 
-# Define Global Settings
-# Project root directory
-ROOT_DIR = here::here()
-
-# Year (For Shapefile Import)
-YEAR <- 2022
+options(tigris_use_cache = TRUE)
 ```
+
+#Map of States Visited
 
 ##Inputs
-###Shapefiles
-####States
 ```{r state_shapefile_import, cache=TRUE, echo=TRUE, results='hide'}
-file_name <- glue::glue("cb_{YEAR}_us_state_500k.shp")
-file_path <- file.path(ROOT_DIR, "data", "shapefiles", "state", YEAR, file_name)
-
-state.sf <- sf::read_sf(dsn = file_path)
+state.sp <- states(cb = TRUE)
 ```
 
-####County
-```{r county_shapefile_import, cache=TRUE, echo=TRUE, results='hide'}
-file_name <- glue::glue("cb_{YEAR}_us_county_500k.shp")
-file_path <- file.path(ROOT_DIR, "data", "shapefiles", "county", YEAR, file_name)
-
-county.sf <- sf::read_sf(dsn = file_path)
+```{r blank_state_list}
+state_list_blank<- state.sp@data %>% 
+  select(NAME, STUSPS, GEOID) %>% 
+  distinct() %>% 
+  mutate(Visited = 0) %>%
+  #Remove US Territories
+  filter(GEOID < 60) %>% 
+  arrange((GEOID))
 ```
 
-###Tracking Table
-```{r tracking_table_import, cache=TRUE, echo=TRUE, results='hide'}
-file_path <- file.path(ROOT_DIR, "data", "tables", "list_of_counties_active.csv")
+##Shapefile Processing
 
-tracking_counties.df = readr::read_csv(
-  file = file_path,
-  col_types = readr::cols(
-    visited = readr::col_integer(), 
-    date = readr::col_datetime(format = "%Y/%m/%d/")
-    )
-  )
-```
+```{r state_shapefile_processing, message = FALSE}
+#State
+state.sp@data$id <- rownames(state.sp@data)
 
-#Processing
-##Create GEOID
-```{r create_geoid}
-tracking_counties.df <- tracking_counties.df %>%
-  dplyr::mutate(
-    GEOID = stringr::str_c(state_code, county_code)
-  )
-```
+state_points <- tidy(state.sp)
 
-##Create State Tracking Table
-```{r}
-tracking_states.df <- tracking_counties.df %>%
-  dplyr::group_by(state_code) %>%
-  dplyr::mutate(
-    n_counties = sum(visited),
-    visited = dplyr::if_else(n_counties > 0, 1, 0),
-  ) %>%
-  dplyr::distinct(state, state_code, state_name, visited)
+state.df <- state_points %>%
+  left_join(y = state.sp@data, by = "id") %>% 
+  filter(!(STATEFP %in% c("02", "15", "60", "66", "69", "72", "78"))) %>% 
+  filter(long < 1)
 ```
 
 
-##Join Tracking Tables
-###States
-```{r join_tracking_states}
-tracking_states_join.df <- tracking_states.df %>%
-  dplyr::select(state_code, visited)
+##List of States Visited
 
-state_tracking.sf <- state.sf %>%
-  dplyr::left_join(
-    tracking_states_join.df, 
-    by = c("STATEFP" = "state_code")
-  )
+```{r state_list_creation}
+#Blank State List Export
+# state_list_blank %>% 
+#   write.csv("./data/list_of_states_blank.csv")
+
+#Active State List Import
+state_list_active <- read.csv("./data/list_of_states_active.csv", 
+                              stringsAsFactors = FALSE)
 ```
 
-###Counties
-```{r join_tracking_county}
-tracking_counties_join.df <- tracking_counties.df %>%
-  dplyr::rename(NAME_STATE = state_name) %>%
-  dplyr::select(GEOID, NAME_STATE, visited, date)
+###Join
 
-county_tracking.sf <- county.sf %>%
-  dplyr::left_join(
-    tracking_counties_join.df, 
-    by = "GEOID"
-  ) %>%
-  dplyr::rename(NAME_COUNTY = NAME)
-```
-
-# Plots
-## Shared Properties
-```{r}
-cols <- c("#F4F6F6", "#1F618D")
-```
-
-## Contiguous US
-```{r}
-# Define states and territory codes to drop
-states_terr_to_drop <- c("02", "15", "60", "66", "69", "72", "78")
-```
-
-### States
-```{r}
-# Drop non-contiguous states and territories
-plot.sf <- state_tracking.sf %>%
- dplyr::filter(!(STATEFP %in% states_terr_to_drop))
-
-# Change projection
-plot_reprojected_state.sf <- sf::st_transform(plot.sf, 'EPSG:3082')
-   
-p <- ggplot(
-  data = plot_reprojected_state.sf, 
-  mapping = aes(fill = factor(visited))
-  ) +
-  geom_sf(color = "gray80", size = 0.05) +
-  scale_fill_manual(values = cols) +
-  theme_map() +
-  guides(fill="none") +
-  labs(title = "United States")
-
-p
-```
-
-### Counties
-```{r}
-# Drop non-contiguous states and territories
-plot.sf <- county_tracking.sf %>%
- dplyr::filter(!(STATEFP %in% states_terr_to_drop))
-
-# Change projection
-plot_reprojected_county.sf <- sf::st_transform(plot.sf, 'EPSG:3082')
-   
-p <- ggplot() +
-  geom_sf(
-    data = plot_reprojected_county.sf,
-    mapping = aes(fill = factor(visited)),
-    color = "gray80", size = 0.05
-    ) +
-  geom_sf(
-    data = plot_reprojected_state.sf,
-    mapping = aes(
-      fill = factor(visited),
-      alpha = factor(visited)
-      ),
-    # alpha = 0.1,
-    color = "black", 
-    size = 0.25
-    ) +
-  scale_fill_manual(values = cols) +
-  scale_alpha_manual(values = c(0, 0.1)) +
-  theme_map() +
-  guides(
-    fill="none",
-    alpha = "none"
-    ) +
-  labs(title = "United States")
-
-p
+```{r state_df_join}
+state.df_visited <-left_join(state.df, state_list_active, by = c("STUSPS"))
 ```
 
 ##Plotting the Map
