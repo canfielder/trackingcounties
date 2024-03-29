@@ -2,7 +2,9 @@
 title: "Tracking Counties Visualizations"
 author: "Evan Canfield"
 date: "5/11/2019"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -126,18 +128,18 @@ county_tracking.sf <- county.sf %>%
 
 # Plots
 ## Shared Properties
-```{r}
+```{r define_shared_properties}
 cols <- c("#F4F6F6", "#1F618D")
 ```
 
 ## Contiguous US
-```{r}
+```{r define_states_to_drop}
 # Define states and territory codes to drop
 states_terr_to_drop <- c("02", "15", "60", "66", "69", "72", "78")
 ```
 
 ### States
-```{r}
+```{r plot_state_48}
 # Drop non-contiguous states and territories
 plot.sf <- state_tracking.sf %>%
  dplyr::filter(!(STATEFP %in% states_terr_to_drop))
@@ -159,7 +161,7 @@ p
 ```
 
 ### Counties
-```{r}
+```{r plot_counties_48}
 # Drop non-contiguous states and territories
 plot.sf <- county_tracking.sf %>%
  dplyr::filter(!(STATEFP %in% states_terr_to_drop))
