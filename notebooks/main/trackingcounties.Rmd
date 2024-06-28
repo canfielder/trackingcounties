@@ -11,10 +11,10 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#Purpose
+# Purpose
 The purpose of this notebook is to visualize the tracking of states and counties visited.
 
-#Setup
+# Setup
 The following libraries were used.
 
 ## Libaries
@@ -36,7 +36,9 @@ pacman::p_load(
   leaflet, 
   RColorBrewer, 
   sf, 
-  tidyverse
+  stringr,
+  tidyverse,
+  vroom
   )
 
 # Define Global Settings
@@ -47,9 +49,9 @@ ROOT_DIR = here::here()
 YEAR <- 2022
 ```
 
-##Inputs
-###Shapefiles
-####States
+## Inputs
+### Shapefiles
+#### States
 ```{r state_shapefile_import, cache=TRUE, echo=TRUE, results='hide'}
 file_name <- glue::glue("cb_{YEAR}_us_state_500k.shp")
 file_path <- file.path(ROOT_DIR, "data", "shapefiles", "state", YEAR, file_name)
@@ -57,7 +59,7 @@ file_path <- file.path(ROOT_DIR, "data", "shapefiles", "state", YEAR, file_name)
 state.sf <- sf::read_sf(dsn = file_path)
 ```
 
-####County
+#### County
 ```{r county_shapefile_import, cache=TRUE, echo=TRUE, results='hide'}
 file_name <- glue::glue("cb_{YEAR}_us_county_500k.shp")
 file_path <- file.path(ROOT_DIR, "data", "shapefiles", "county", YEAR, file_name)
@@ -65,21 +67,49 @@ file_path <- file.path(ROOT_DIR, "data", "shapefiles", "county", YEAR, file_name
 county.sf <- sf::read_sf(dsn = file_path)
 ```
 
-###Tracking Table
+### Tracking Table
 ```{r tracking_table_import, cache=TRUE, echo=TRUE, results='hide'}
 file_path <- file.path(ROOT_DIR, "data", "tables", "list_of_counties_active.csv")
 
-tracking_counties.df = readr::read_csv(
+col_type_spec <- list(
+  state = vroom::col_character(),
+  state_code = vroom::col_integer(),
+  state_name = vroom::col_character(),
+  county_code = vroom::col_integer(),
+  county_name = vroom::col_character(),
+  date = vroom::col_date(format = "%m/%d/%y", include_na = TRUE),
+  notes = vroom::col_character()
+)
+
+tracking_counties.df <- vroom::vroom(
   file = file_path,
-  col_types = readr::cols(
-    visited = readr::col_integer(), 
-    date = readr::col_datetime(format = "%Y/%m/%d/")
+  delim = ",",
+  na = "",
+  col_types = col_type_spec
+  )
+```
+
+# Processing
+## Convert State and County Codes to Character With Leading Zeros
+```{r}
+tracking_counties.df <- tracking_counties.df %>%
+  mutate(
+    state_code = stringr::str_pad(
+      state_code,
+      width = 2,
+      side  = "left",
+      pad   = "0"
+    ),
+    county_code = stringr::str_pad(
+      county_code,
+      width = 3,
+      side  = "left",
+      pad   = "0"
     )
   )
 ```
 
-#Processing
-##Create GEOID
+## Create GEOID
 ```{r create_geoid}
 tracking_counties.df <- tracking_counties.df %>%
   dplyr::mutate(
@@ -87,7 +117,19 @@ tracking_counties.df <- tracking_counties.df %>%
   )
 ```
 
-##Create State Tracking Table
+## Create Visited Binary Based on Date Visited
+```{r}
+tracking_counties.df <- tracking_counties.df %>%
+  dplyr::mutate(
+    visited = dplyr::if_else(
+      is.na(date),
+      0,
+      1
+    )
+  )
+```
+
+## Create State Tracking Table
 ```{r}
 tracking_states.df <- tracking_counties.df %>%
   dplyr::group_by(state_code) %>%
@@ -99,8 +141,8 @@ tracking_states.df <- tracking_counties.df %>%
 ```
 
 
-##Join Tracking Tables
-###States
+## Join Tracking Tables
+### States
 ```{r join_tracking_states}
 tracking_states_join.df <- tracking_states.df %>%
   dplyr::select(state_code, visited)
@@ -112,7 +154,7 @@ state_tracking.sf <- state.sf %>%
   )
 ```
 
-###Counties
+### Counties
 ```{r join_tracking_county}
 tracking_counties_join.df <- tracking_counties.df %>%
   dplyr::rename(NAME_STATE = state_name) %>%
@@ -146,7 +188,7 @@ plot.sf <- state_tracking.sf %>%
 
 # Change projection
 plot_reprojected_state.sf <- sf::st_transform(plot.sf, 'EPSG:3082')
-   
+
 p <- ggplot(
   data = plot_reprojected_state.sf, 
   mapping = aes(fill = factor(visited))
