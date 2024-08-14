@@ -1,4 +1,16 @@
+# ---------------------------------------------------------------------------- #
+# IMPORT #
+import geopandas as gpd
 import numpy as np
+import pandas as pd
+
+from shapely.geometry import LineString
+from shapely.ops import split
+from shapely.affinity import translate
+from shapely.ops import unary_union
+
+# ---------------------------------------------------------------------------- #
+# CLASSES / FUNCTIONS #
 
 def shift_meridian(geo_df, new_centerline): 
     """
@@ -61,7 +73,7 @@ def shift_meridian(geo_df, new_centerline):
         unified_geom = gpd.GeoSeries(unary_union(shifted_parts))
 
         # Converty unified geometries into geo dataframe
-        gdf_geom_shift = geopandas.GeoDataFrame(
+        gdf_geom_shift = gpd.GeoDataFrame(
             {
                 "geometry": unified_geom
                 }
@@ -84,3 +96,7 @@ def shift_meridian(geo_df, new_centerline):
     )
 
     return geo_df
+
+
+def adjust_crs(gdf, epsg):
+    return gdf.to_crs(epsg = epsg)
