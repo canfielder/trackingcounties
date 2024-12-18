@@ -94,6 +94,38 @@ def generate_plot_data(
         >> s.filter(s._.statefp == '15')
         )
     
+
+    # HAWAII -----------------------------------
+    plot_label = 'north_carolina'
+
+    dct_plot['state'][plot_label] = (
+        gdf_state
+        >> s.filter(s._.geoid == '37')
+        )   
+
+    dct_plot['county'][plot_label] = (
+        gdf_county
+        >> s.filter(s._.statefp == '37')
+        )
+    
+
+    # Southeast -----------------------------------
+    plot_label = 'north_carolina_w_adjacent_states'
+
+    state_codes = [
+        '13', '37', '45', '47', '51'
+    ]
+
+    dct_plot['state'][plot_label] = (
+        gdf_state
+        >> s.filter(s._.geoid.isin(state_codes))
+        )   
+
+    dct_plot['county'][plot_label] = (
+        gdf_county
+        >> s.filter(s._.statefp.isin(state_codes))
+        )
+    
     return dct_plot
 
 

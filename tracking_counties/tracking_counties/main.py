@@ -23,7 +23,8 @@ def tracking_counties(print_plot = True, save_plot = True):
 
     # Convert datasets to plot specific data
     dct_plot = generate_plot_data(
-        gdf_county, gdf_state,
+        gdf_county, 
+        gdf_state,
         non_contiguous_codes = NON_CONTIGUOUS_CODES,
         epsg_code            = EPSG_CODE
         )
@@ -42,6 +43,3 @@ def tracking_counties(print_plot = True, save_plot = True):
             save_plot  = save_plot,
             print_plot = print_plot
             )
-
-if __name__ == "__main__":
-    tracking_counties()
