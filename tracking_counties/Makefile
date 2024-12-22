@@ -3,4 +3,4 @@ build_package:
 
 install_package:
 	pip install --upgrade pip &
-		python3 -m pip install .
+		python3 -m pip install -e .

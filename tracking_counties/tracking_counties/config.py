@@ -47,12 +47,16 @@ PLOT_PARAMS = {
         'height': {
             'contiguous': 6,
             'alaska': 6,
-            'hawaii': 6
+            'hawaii': 6,
+            'north_carolina': 5,
+            'north_carolina_w_adjacent_states': 6
         },
         'width': {
             'contiguous': 10,
             'alaska': 7,
             'hawaii': 6,
+            'north_carolina': 10,
+            'north_carolina_w_adjacent_states': 8
         }
     }
 }

@@ -10,3 +10,9 @@ Visualizations related to tracking counties and states visited.
 
 ## Hawaii
 ![hawaii](data/plots/hawaii.png)
+
+## North Carolina
+![north_carolina](data/plots/north_carolina.png)
+
+## North Carolina and Adjancent States
+![north_carolina_w_adjacent_states](data/plots/north_carolina_w_adjacent_states.png)

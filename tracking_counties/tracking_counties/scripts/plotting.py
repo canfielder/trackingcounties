@@ -11,7 +11,11 @@ from .mapping import adjust_crs, shift_meridian
 # CLASSES / FUNCTIONS #
 
 def generate_plot_data(
-        gdf_county, gdf_state, non_contiguous_codes, epsg_code):
+        gdf_county, 
+        gdf_state, 
+        non_contiguous_codes, 
+        epsg_code
+        ):
 
     # Init
     dct_plot = {
@@ -82,8 +86,6 @@ def generate_plot_data(
         )
     
     # HAWAII -----------------------------------
-    plot_label = 'hawaii'
-
     dct_plot['state'][plot_label] = (
         gdf_state
         >> s.filter(s._.geoid == '15')
@@ -93,11 +95,8 @@ def generate_plot_data(
         gdf_county
         >> s.filter(s._.statefp == '15')
         )
-    
 
-    # HAWAII -----------------------------------
-    plot_label = 'north_carolina'
-
+    # North Carolina -----------------------------------
     dct_plot['state'][plot_label] = (
         gdf_state
         >> s.filter(s._.geoid == '37')
@@ -107,11 +106,8 @@ def generate_plot_data(
         gdf_county
         >> s.filter(s._.statefp == '37')
         )
-    
 
     # Southeast -----------------------------------
-    plot_label = 'north_carolina_w_adjacent_states'
-
     state_codes = [
         '13', '37', '45', '47', '51'
     ]

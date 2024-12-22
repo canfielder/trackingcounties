@@ -29,6 +29,7 @@ def tracking_counties(print_plot = True, save_plot = True):
         epsg_code            = EPSG_CODE
         )
 
+
     # Initialize plotter
     plotter = Plot(
         plot_tables = dct_plot,
