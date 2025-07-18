@@ -1,0 +1,36 @@
+{
+    "style": {
+        "state": {
+            "visited": {
+                "fillColor": "#1F618D", 
+                "color": "#000000", 
+                "weight": 2.5,
+                "fillOpacity": 0.15
+            },
+            "not_visited": {
+                "fillColor": "#F4F6F6", 
+                "color": "#000000", 
+                "weight": 2.5, 
+                "fillOpacity": 0
+            }
+        },
+        "county": {
+            "visited": {
+                "fillColor": "#1F618D", 
+                "color": "#717d7e", 
+                "weight": 1, 
+                "fillOpacity": 0.5
+            },
+            "not_visited": {
+                "fillColor": "F4F6F6", 
+                "color": "#717d7e", 
+                "weight": 1, 
+                "fillOpacity": 0
+            }
+        }
+    },
+    "interactive_map":{
+        "height": 750,
+        "width": 1000
+    }
+}
