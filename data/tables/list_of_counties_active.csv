@@ -1,5 +1,5 @@
 state,state_code,state_name,county_code,county_name,date,notes
-AK,2,Alaska,13,Aleutians East,,
+AK,2,Alaska,13,Aleutians East,,test
 AK,2,Alaska,16,Aleutians West,,
 AK,2,Alaska,20,Anchorage,,
 AK,2,Alaska,50,Bethel,,
