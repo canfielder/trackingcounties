@@ -1,15 +1,13 @@
 ################################################################################
 # SETUP #
-import os 
+import os
 
 from pathlib import Path
 
+
 ################################################################################
 # CODE #
-def get_project_directory(
-    search_directory = Path.cwd(),
-    root_file = 'root.txt'
-    ):
+def get_project_directory(search_directory=Path.cwd(), root_file="root.txt"):
     """
     Recursively searches for a specified root file in the given directory
     and its parent directories.
@@ -41,7 +39,7 @@ def get_project_directory(
     --------
     To find the project directory containing 'config.txt' starting from the
     current working directory:
-    
+
     >>> result = get_project_directory(root_file='config.txt')
     >>> print(result)
 
@@ -52,16 +50,16 @@ def get_project_directory(
     >>> print(result)
     """
     # Input Validation
-    assert isinstance(search_directory, Path), \
-        "search_directory must be a pathlib.Path object."
+    assert isinstance(
+        search_directory, Path
+    ), "search_directory must be a pathlib.Path object."
     assert isinstance(root_file, str), "root_file must be a string."
 
     # Check if the provided search_directory is a valid path
-    assert search_directory.is_dir(), \
-        "search_directory must be a valid directory path."
+    assert search_directory.is_dir(), "search_directory must be a valid directory path."
 
     if root_file in os.listdir(search_directory):
         return search_directory
-    
+
     else:
-        return get_project_directory(search_directory = search_directory.parent)
+        return get_project_directory(search_directory=search_directory.parent)

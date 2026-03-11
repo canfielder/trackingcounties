@@ -2,13 +2,13 @@
 # IMPORT #
 import folium
 import folium.plugins as plugins
-import geopandas as gpd
-import hashlib
+# import geopandas as gpd
+# import hashlib
 import json
 import streamlit as st
 import streamlit_folium as stf
 
-from pathlib import Path
+# from pathlib import Path
 
 from tracking_counties.config import EPSG_CODE, NON_CONTIGUOUS_CODES, PLOT_PARAMS, ROOT_DIR
 from tracking_counties.scripts.data import import_data
@@ -23,11 +23,11 @@ st.set_page_config(
 
 ###############################################################################
 # FUNCTIONS #
-def hash_file_content(url):
-    """Compute the hash of file content from a URL."""
-    gdf = gpd.read_file(url)
-    content_hash = hashlib.sha256(gdf.to_json().encode()).hexdigest()
-    return gdf, content_hash
+# def hash_file_content(url):
+#     """Compute the hash of file content from a URL."""
+#     gdf = gpd.read_file(url)
+#     content_hash = hashlib.sha256(gdf.to_json().encode()).hexdigest()
+#     return gdf, content_hash
 
 
 def format_date(date, print_fmt = "%B %d, %Y"):

@@ -1,13 +1,30 @@
-.PHONY: run install clean
+# Use bash for shell commands
+SHELL := /bin/bash
 
-# Run the Streamlit app
-run:
-	streamlit run app/app.py
+# Default target
+.DEFAULT_GOAL := launch
 
-# Install the tracking_counties package in editable mode
-install:
-	pip install -e tracking_counties
+# Launch the Streamlit app
+launch:
+	@echo "🚀 Launching Streamlit app..."
+	uv run streamlit run app/app.py
 
-# Remove build artifacts
+# Lint the code with Ruff
+lint:
+	@echo "🔍 Running Ruff lint..."
+	uv run ruff check src
+
+# Autoformat with Black
+format:
+	@echo "🎨 Formatting code with Black..."
+	uv run black src
+
+# Rebuild the environment
+sync:
+	@echo "🔄 Syncing dependencies..."
+	uv sync --all-extras
+
+# Clean build artifacts
 clean:
-	rm -rf tracking_counties/build tracking_counties/dist tracking_counties.egg-info
+	@echo "🧹 Cleaning up..."
+	rm -rf dist build *.egg-info __pycache__ .pytest_cache .ruff_cache
