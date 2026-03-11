@@ -35,3 +35,7 @@ def tracking_counties(print_plot=True, save_plot=True):
     for plot_label in dct_plot["county"].keys():
 
         plotter(plot_label=plot_label, save_plot=save_plot, print_plot=print_plot)
+
+
+if __name__ == "__main__":
+    tracking_counties()

@@ -5,6 +5,7 @@ on:
     branches: [master]
     paths:
       - "data/tables/list_of_counties_active.csv"
+  workflow_dispatch:
 
 jobs:
   regenerate-plots:
