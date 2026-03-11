@@ -10,14 +10,8 @@ A Streamlit app for tracking US counties visited. View the live app at **[tracki
 
 ## Plots
 
-### Contiguous United States
-![contiguous](data/plots/contiguous.png)
-
-### Alaska
-![alaska](data/plots/alaska.png)
-
-### Hawaii
-![hawaii](data/plots/hawaii.png)
+### United States
+![us_inset](data/plots/us_inset.png)
 
 ### North Carolina
 ![north_carolina](data/plots/north_carolina.png)

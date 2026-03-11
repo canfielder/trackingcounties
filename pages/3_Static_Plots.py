@@ -12,9 +12,7 @@ from scripts.processing import process_data
 st.set_page_config(page_title="Static Plots", layout="wide")
 
 PLOT_LABELS = {
-    "contiguous": "Contiguous US",
-    "alaska": "Alaska",
-    "hawaii": "Hawaii",
+    "us_inset": "United States",
     "north_carolina": "North Carolina",
     "north_carolina_w_adjacent_states": "North Carolina & Adjacent States",
 }

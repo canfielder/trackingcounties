@@ -43,40 +43,44 @@ config_path = PROJECT_ROOT / "config.json"
 with open(config_path, "r") as f:
     CONFIG = json.load(f)
 
-df, counties, states = load_data()
-
 st.header("Interactive Map")
 
-m = folium.Map(location=[39.8283, -98.5795], zoom_start=5, tiles="OpenStreetMap")
+with st.spinner("Loading data..."):
+    df, counties, states = load_data()
 
-for _, row in states.iterrows():
-    style = (
-        CONFIG["style"]["state"]["visited"]
-        if row["visited"] == 1
-        else CONFIG["style"]["state"]["not_visited"]
+with st.spinner("Building map..."):
+    m = folium.Map(location=[39.8283, -98.5795], zoom_start=5, tiles="OpenStreetMap")
+
+    for _, row in states.iterrows():
+        style = (
+            CONFIG["style"]["state"]["visited"]
+            if row["visited"] == 1
+            else CONFIG["style"]["state"]["not_visited"]
+        )
+        folium.GeoJson(
+            row["geometry"],
+            style_function=lambda x, style=style: style,
+        ).add_to(m)
+
+    for _, row in counties.iterrows():
+        style = (
+            CONFIG["style"]["county"]["visited"]
+            if row["visited"] == 1
+            else CONFIG["style"]["county"]["not_visited"]
+        )
+        tooltip = define_tooltip(row)
+        folium.GeoJson(
+            row["geometry"],
+            style_function=lambda x, style=style: style,
+            tooltip=tooltip,
+        ).add_to(m)
+
+    plugins.Fullscreen(position="topleft").add_to(m)
+
+with st.spinner("Rendering map..."):
+    stf.st_folium(
+        m,
+        width=CONFIG["interactive_map"]["width"],
+        height=CONFIG["interactive_map"]["height"],
+        returned_objects=[],
     )
-    folium.GeoJson(
-        row["geometry"],
-        style_function=lambda x, style=style: style,
-    ).add_to(m)
-
-for _, row in counties.iterrows():
-    style = (
-        CONFIG["style"]["county"]["visited"]
-        if row["visited"] == 1
-        else CONFIG["style"]["county"]["not_visited"]
-    )
-    tooltip = define_tooltip(row)
-    folium.GeoJson(
-        row["geometry"],
-        style_function=lambda x, style=style: style,
-        tooltip=tooltip,
-    ).add_to(m)
-
-plugins.Fullscreen(position="topleft").add_to(m)
-stf.st_folium(
-    m,
-    width=CONFIG["interactive_map"]["width"],
-    height=CONFIG["interactive_map"]["height"],
-    returned_objects=[],
-)

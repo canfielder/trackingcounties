@@ -3,6 +3,7 @@
 import pandas as pd
 import pathlib as pl
 import plotnine as p9
+from pygris.utils import shift_geometry
 import siuba as s
 
 from paths import PROJECT_ROOT
@@ -89,6 +90,18 @@ def generate_plot_data(gdf_county, gdf_state, non_contiguous_codes, epsg_code):
     dct_plot["county"][plot_label] = gdf_county >> s.filter(
         s._.statefp.isin(state_codes)
     )
+
+    # US WITH ALASKA + HAWAII INSETS -----------------------------------
+    plot_label = "us_inset"
+
+    # Exclude territories — shift_geometry only handles the 50 states
+    territory_codes = ["60", "66", "69", "72", "78"]
+
+    gdf_state_50 = gdf_state >> s.filter(~s._.geoid.isin(territory_codes))
+    gdf_county_50 = gdf_county >> s.filter(~s._.statefp.isin(territory_codes))
+
+    dct_plot["state"][plot_label] = shift_geometry(gdf_state_50)
+    dct_plot["county"][plot_label] = shift_geometry(gdf_county_50)
 
     return dct_plot
 

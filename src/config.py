@@ -37,6 +37,7 @@ PLOT_PARAMS = {
             "hawaii": 6,
             "north_carolina": 5,
             "north_carolina_w_adjacent_states": 6,
+            "us_inset": 8,
         },
         "width": {
             "contiguous": 10,
@@ -44,6 +45,7 @@ PLOT_PARAMS = {
             "hawaii": 6,
             "north_carolina": 10,
             "north_carolina_w_adjacent_states": 8,
+            "us_inset": 12,
         },
     },
 }
