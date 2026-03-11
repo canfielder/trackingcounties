@@ -23,6 +23,12 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
+      - name: Cache pygris shapefiles
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pygris
+          key: pygris-cb-2023
+
       - name: Regenerate plots
         run: PYTHONPATH=src uv run python src/generate_plots.py
 

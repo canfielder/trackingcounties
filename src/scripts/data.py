@@ -1,8 +1,7 @@
 # ---------------------------------------------------------------------------- #
 # IMPORT #
-import geopandas as gpd
 import pandas as pd
-import pathlib as pl
+import pygris
 
 from paths import DATA_DIR
 
@@ -34,28 +33,10 @@ def import_data_visit():
 
 
 def import_shapefiles():
-    # State Shapefile Data ----------------------------------------------------
-    sf_path = (
-        DATA_DIR
-        / "shapefiles"
-        / "cb_2023_us_state_500k"
-        / "cb_2023_us_state_500k.shp"
-    )
-    gdf_state = gpd.read_file(str(sf_path))
-
-    # Set clumn names to lower case
+    gdf_state = pygris.states(cb=True, year=2023, cache=True)
     gdf_state.columns = [col.lower() for col in gdf_state.columns]
 
-    # County Shapefile Data ----------------------------------------------------
-    sf_path = (
-        DATA_DIR
-        / "shapefiles"
-        / "cb_2023_us_county_500k"
-        / "cb_2023_us_county_500k.shp"
-    )
-    gdf_county = gpd.read_file(str(sf_path))
-
-    # Set column names to lower case
+    gdf_county = pygris.counties(cb=True, year=2023, cache=True)
     gdf_county.columns = [col.lower() for col in gdf_county.columns]
 
     return gdf_county, gdf_state
