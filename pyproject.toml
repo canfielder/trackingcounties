@@ -31,19 +31,6 @@ dev = [
 [project.scripts]
 app = "streamlit.web.cli:main"
 
-[build-system]
-requires = [
-    "setuptools>=61.0",
-    "wheel"
-    ]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-package-dir = { "" = "src" }
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
 [tool.ruff]
 line-length = 88
 extend-select = ["I"]
@@ -54,8 +41,4 @@ line-length = 88
 target-version = ["py311"]
 
 [tool.uv]
-package = true
-
-[tool.uv.extra-build-dependencies]
-# This tells uv: "When building tracking-counties, make sure these are present"
-tracking-counties = ["setuptools", "wheel"]
+package = false

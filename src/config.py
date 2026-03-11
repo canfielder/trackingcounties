@@ -2,14 +2,12 @@
 # IMPORT #
 import datetime as dt
 
-from .scripts.misc import get_project_directory
+from paths import PROJECT_ROOT
 
 # ---------------------------------------------------------------------------- #
 # VALUES #
 
 SEED = 5590
-
-ROOT_DIR = get_project_directory()
 
 # String format of date field after import
 DATE_FORMAT = "%m/%d/%y"

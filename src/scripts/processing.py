@@ -4,7 +4,7 @@ import datetime as dt
 import pandas as pd
 import siuba as s
 
-from ..config import NA_DATE, DATE_FORMAT
+from config import NA_DATE, DATE_FORMAT
 
 
 # ---------------------------------------------------------------------------- #
@@ -97,10 +97,6 @@ def process_data(df_visited, gdf_county, gdf_state):
     # Create state visit data
     df_visited_state = create_state_visited(df_visited_county)
 
-    # Convert visit column to categorical
-    df_visited_county = convert_visited_to_categorical(df_visited_county)
-    df_visited_state = convert_visited_to_categorical(df_visited_state)
-
     # Join visit data to shapefiles
     select_cols = ["geoid", "visited", "date"]
 
@@ -111,5 +107,9 @@ def process_data(df_visited, gdf_county, gdf_state):
     gdf_visited_state = gdf_state >> s.left_join(
         s._, df_visited_state[select_cols], by="geoid"
     )
+
+    # Convert visit column to categorical after the join so the dtype is preserved
+    gdf_visited_county = convert_visited_to_categorical(gdf_visited_county)
+    gdf_visited_state = convert_visited_to_categorical(gdf_visited_state)
 
     return gdf_visited_county, gdf_visited_state

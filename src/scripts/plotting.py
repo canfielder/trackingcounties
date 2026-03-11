@@ -1,11 +1,12 @@
 # ---------------------------------------------------------------------------- #
 # IMPORT #
+import pandas as pd
 import pathlib as pl
 import plotnine as p9
 import siuba as s
 
-from ..config import ROOT_DIR
-from .mapping import adjust_crs, shift_meridian
+from paths import PROJECT_ROOT
+from scripts.mapping import adjust_crs, shift_meridian
 
 # ---------------------------------------------------------------------------- #
 # CLASSES / FUNCTIONS #
@@ -65,16 +66,22 @@ def generate_plot_data(gdf_county, gdf_state, non_contiguous_codes, epsg_code):
     dct_plot["county"][plot_label] = shift_meridian(dct_plot["county"][plot_label], cl)
 
     # HAWAII -----------------------------------
+    plot_label = "hawaii"
+
     dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid == "15")
 
     dct_plot["county"][plot_label] = gdf_county >> s.filter(s._.statefp == "15")
 
     # North Carolina -----------------------------------
+    plot_label = "north_carolina"
+
     dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid == "37")
 
     dct_plot["county"][plot_label] = gdf_county >> s.filter(s._.statefp == "37")
 
-    # Southeast -----------------------------------
+    # North Carolina w/ Adjacent States -----------------------------------
+    plot_label = "north_carolina_w_adjacent_states"
+
     state_codes = ["13", "37", "45", "47", "51"]
 
     dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid.isin(state_codes))
@@ -92,7 +99,7 @@ class Plot:
         self.plot_params = plot_params
         self.units = units
         self.dpi = dpi
-        self.plot_dir = pl.PurePath(ROOT_DIR, "data", "plots")
+        self.plot_dir = PROJECT_ROOT / "data" / "plots"
 
     def __call__(self, plot_label, print_plot=True, save_plot=True):
         p = self.generate_plot(plot_label=plot_label)
@@ -105,22 +112,30 @@ class Plot:
 
     def generate_plot(self, plot_label):
 
+        # Ensure visited is Categorical so discrete scales work regardless of
+        # how the data was cached or serialized upstream.
+        county_data = self.plot_tables["county"][plot_label].copy()
+        county_data["visited"] = pd.Categorical(county_data["visited"])
+        state_data = self.plot_tables["state"][plot_label].copy()
+        state_data["visited"] = pd.Categorical(state_data["visited"])
+
         p = (
             p9.ggplot()
             + p9.geom_map(
-                data=self.plot_tables["county"][plot_label],
+                data=county_data,
                 mapping=p9.aes(fill="visited"),
                 color=self.plot_params["entity_border"]["color"]["county"],
                 size=self.plot_params["entity_border"]["thickness"]["county"],
             )
             + p9.geom_map(
-                data=self.plot_tables["state"][plot_label],
+                data=state_data,
                 mapping=p9.aes(fill="visited", alpha="visited"),
                 color=self.plot_params["entity_border"]["color"]["state"],
                 size=self.plot_params["entity_border"]["thickness"]["state"],
             )
-            + p9.scale_fill_manual(values=self.plot_params["color"], guide=False)
-            + p9.scale_alpha_manual(values=self.plot_params["opacity"], guide=False)
+            + p9.scale_fill_manual(values=self.plot_params["color"])
+            + p9.scale_alpha_manual(values=self.plot_params["opacity"])
+            + p9.guides(fill="none", alpha="none")
             + p9.theme_linedraw()
             + p9.theme(
                 figure_size=(
@@ -141,7 +156,7 @@ class Plot:
         return p
 
     def save_plot(self, plot, plot_label):
-        plot_path = pl.PurePath(self.plot_dir, f"{plot_label}.png")
+        plot_path = self.plot_dir / f"{plot_label}.png"
         plot.save(
             filename=plot_path,
             height=self.plot_params["dimensions"]["height"][plot_label],

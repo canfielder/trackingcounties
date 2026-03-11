@@ -7,7 +7,7 @@ SHELL := /bin/bash
 # Launch the Streamlit app
 launch:
 	@echo "🚀 Launching Streamlit app..."
-	uv run streamlit run app/app.py
+	PYTHONPATH=src uv run streamlit run app.py
 
 # Lint the code with Ruff
 lint:

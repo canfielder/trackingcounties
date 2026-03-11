@@ -1,10 +1,10 @@
 # ---------------------------------------------------------------------------- #
 # IMPORT #
 
-from .config import EPSG_CODE, NON_CONTIGUOUS_CODES, PLOT_PARAMS
-from .scripts.data import import_data
-from .scripts.plotting import generate_plot_data, Plot
-from .scripts.processing import process_data
+from config import EPSG_CODE, NON_CONTIGUOUS_CODES, PLOT_PARAMS
+from scripts.data import import_data
+from scripts.plotting import generate_plot_data, Plot
+from scripts.processing import process_data
 
 
 # ---------------------------------------------------------------------------- #
