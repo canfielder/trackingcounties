@@ -1,10 +1,14 @@
-import sys, pathlib
+import pathlib
+import sys
+
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "src"))
 
 import json
-import streamlit as st
+
 import folium
 import folium.plugins as plugins
+import geopandas as gpd
+import streamlit as st
 import streamlit_folium as stf
 
 from paths import PROJECT_ROOT
@@ -25,18 +29,28 @@ def load_data():
     return df, counties, states
 
 
-def format_date(date, print_fmt="%B %d, %Y"):
+def format_date(date, print_fmt: str = "%B %d, %Y") -> str:
+    """Format a datetime as a human-readable string."""
     return date.strftime(print_fmt)
 
 
-def define_tooltip(row):
-    date_str = format_date(row["date"]) if row["visited"] == 1 else ""
-    return (
-        f"State: {row['state_name']}<br>"
-        f"County: {row['name']}<br>"
-        f"FIPS: {row['geoid']}<br>"
-        f"Date Visited: {date_str}"
+def _prepare_states(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """Subset state GeoDataFrame to columns needed by folium."""
+    out = gdf[["geometry", "visited"]].copy()
+    out["visited"] = out["visited"].astype(int)
+    return out
+
+
+def _prepare_counties(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """Subset county GeoDataFrame and pre-format dates for folium tooltips."""
+    cols = ["geometry", "visited", "state_name", "name", "geoid", "date"]
+    out = gdf[cols].copy()
+    out["visited"] = out["visited"].astype(int)
+    out["date_str"] = out.apply(
+        lambda row: format_date(row["date"]) if row["visited"] == 1 else "",
+        axis=1,
     )
+    return out.drop(columns=["date"])
 
 
 config_path = PROJECT_ROOT / "config.json"
@@ -51,29 +65,30 @@ with st.spinner("Loading data..."):
 with st.spinner("Building map..."):
     m = folium.Map(location=[39.8283, -98.5795], zoom_start=5, tiles="OpenStreetMap")
 
-    for _, row in states.iterrows():
-        style = (
-            CONFIG["style"]["state"]["visited"]
-            if row["visited"] == 1
-            else CONFIG["style"]["state"]["not_visited"]
-        )
-        folium.GeoJson(
-            row["geometry"],
-            style_function=lambda x, style=style: style,
-        ).add_to(m)
+    state_styles = CONFIG["style"]["state"]
+    county_styles = CONFIG["style"]["county"]
 
-    for _, row in counties.iterrows():
-        style = (
-            CONFIG["style"]["county"]["visited"]
-            if row["visited"] == 1
-            else CONFIG["style"]["county"]["not_visited"]
-        )
-        tooltip = define_tooltip(row)
-        folium.GeoJson(
-            row["geometry"],
-            style_function=lambda x, style=style: style,
-            tooltip=tooltip,
-        ).add_to(m)
+    folium.GeoJson(
+        _prepare_states(states),
+        style_function=lambda f: (
+            state_styles["visited"]
+            if f["properties"]["visited"] == 1
+            else state_styles["not_visited"]
+        ),
+    ).add_to(m)
+
+    folium.GeoJson(
+        _prepare_counties(counties),
+        style_function=lambda f: (
+            county_styles["visited"]
+            if f["properties"]["visited"] == 1
+            else county_styles["not_visited"]
+        ),
+        tooltip=folium.GeoJsonTooltip(
+            fields=["state_name", "name", "geoid", "date_str"],
+            aliases=["State:", "County:", "FIPS:", "Date Visited:"],
+        ),
+    ).add_to(m)
 
     plugins.Fullscreen(position="topleft").add_to(m)
 
