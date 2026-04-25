@@ -1,12 +1,15 @@
-import sys, pathlib
+import pathlib
+import sys
+
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "src"))
 
 import io
+
 import streamlit as st
 
-from config import EPSG_CODE, NON_CONTIGUOUS_CODES, PLOT_PARAMS
+from config import EPSG_CODE, NON_CONTIGUOUS_CODES, PLOT_PARAMS, PLOT_PREVIEW_DPI
 from scripts.data import import_data
-from scripts.plotting import generate_plot_data, Plot
+from scripts.plotting import Plot, generate_plot_data
 from scripts.processing import process_data
 
 st.set_page_config(page_title="Static Plots", layout="wide")
@@ -48,7 +51,7 @@ def render_plot_to_bytes(plotter, plot_label):
         height=PLOT_PARAMS["dimensions"]["height"][plot_label],
         width=PLOT_PARAMS["dimensions"]["width"][plot_label],
         units="in",
-        dpi=150,
+        dpi=PLOT_PREVIEW_DPI,
     )
     buf.seek(0)
     return buf

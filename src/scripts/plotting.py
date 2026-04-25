@@ -6,6 +6,14 @@ import plotnine as p9
 import siuba as s
 from pygris.utils import shift_geometry
 
+from config import (
+    FIPS_ALASKA,
+    FIPS_HAWAII,
+    FIPS_NC,
+    FIPS_NC_ADJACENT,
+    PLOT_DPI,
+    TERRITORY_CODES,
+)
 from paths import PROJECT_ROOT
 from scripts.mapping import adjust_crs, shift_meridian
 
@@ -45,9 +53,9 @@ def generate_plot_data(gdf_county, gdf_state, non_contiguous_codes, epsg_code):
     # ALASKA -----------------------------------
     plot_label = "alaska"
 
-    dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid == "02")
+    dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid == FIPS_ALASKA)
 
-    dct_plot["county"][plot_label] = gdf_county >> s.filter(s._.statefp == "02")
+    dct_plot["county"][plot_label] = gdf_county >> s.filter(s._.statefp == FIPS_ALASKA)
 
     # Adjust centerline of Alaskan projection. The western edge of the
     # Aluetian islands lie west of the 180 deg meridian. On the deault
@@ -68,36 +76,34 @@ def generate_plot_data(gdf_county, gdf_state, non_contiguous_codes, epsg_code):
     # HAWAII -----------------------------------
     plot_label = "hawaii"
 
-    dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid == "15")
+    dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid == FIPS_HAWAII)
 
-    dct_plot["county"][plot_label] = gdf_county >> s.filter(s._.statefp == "15")
+    dct_plot["county"][plot_label] = gdf_county >> s.filter(s._.statefp == FIPS_HAWAII)
 
     # North Carolina -----------------------------------
     plot_label = "north_carolina"
 
-    dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid == "37")
+    dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid == FIPS_NC)
 
-    dct_plot["county"][plot_label] = gdf_county >> s.filter(s._.statefp == "37")
+    dct_plot["county"][plot_label] = gdf_county >> s.filter(s._.statefp == FIPS_NC)
 
     # North Carolina w/ Adjacent States -----------------------------------
     plot_label = "north_carolina_w_adjacent_states"
 
-    state_codes = ["13", "37", "45", "47", "51"]
-
-    dct_plot["state"][plot_label] = gdf_state >> s.filter(s._.geoid.isin(state_codes))
+    dct_plot["state"][plot_label] = gdf_state >> s.filter(
+        s._.geoid.isin(FIPS_NC_ADJACENT)
+    )
 
     dct_plot["county"][plot_label] = gdf_county >> s.filter(
-        s._.statefp.isin(state_codes)
+        s._.statefp.isin(FIPS_NC_ADJACENT)
     )
 
     # US WITH ALASKA + HAWAII INSETS -----------------------------------
     plot_label = "us_inset"
 
     # Exclude territories — shift_geometry only handles the 50 states
-    territory_codes = ["60", "66", "69", "72", "78"]
-
-    gdf_state_50 = gdf_state >> s.filter(~s._.geoid.isin(territory_codes))
-    gdf_county_50 = gdf_county >> s.filter(~s._.statefp.isin(territory_codes))
+    gdf_state_50 = gdf_state >> s.filter(~s._.geoid.isin(TERRITORY_CODES))
+    gdf_county_50 = gdf_county >> s.filter(~s._.statefp.isin(TERRITORY_CODES))
 
     dct_plot["state"][plot_label] = shift_geometry(gdf_state_50)
     dct_plot["county"][plot_label] = shift_geometry(gdf_county_50)
@@ -106,7 +112,7 @@ def generate_plot_data(gdf_county, gdf_state, non_contiguous_codes, epsg_code):
 
 
 class Plot:
-    def __init__(self, plot_tables, plot_params, units="in", dpi=1000):
+    def __init__(self, plot_tables, plot_params, units="in", dpi=PLOT_DPI):
         self.plot_tables = plot_tables
         self.plot_params = plot_params
         self.units = units

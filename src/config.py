@@ -5,17 +5,29 @@ import datetime as dt
 # ---------------------------------------------------------------------------- #
 # VALUES #
 
-SEED = 5590
-
 # String format of date field after import
 DATE_FORMAT = "%m/%d/%y"
 
 # Placeholder for missing dates
 NA_DATE = dt.datetime(1900, 1, 1)
 
+# AK + HI + US territories
 NON_CONTIGUOUS_CODES = ["02", "15", "60", "66", "69", "72", "78"]
 
+# Territories only (AK/HI excluded) — used where shift_geometry requires 50 states
+TERRITORY_CODES = ["60", "66", "69", "72", "78"]
+
 EPSG_CODE = "3082"
+
+# State FIPS codes for region-specific plots
+FIPS_ALASKA = "02"
+FIPS_HAWAII = "15"
+FIPS_NC = "37"
+FIPS_NC_ADJACENT = ["13", "37", "45", "47", "51"]  # GA, NC, SC, TN, VA
+
+# DPI for saved plot files vs. on-demand web preview
+PLOT_DPI = 1000
+PLOT_PREVIEW_DPI = 150
 
 
 PLOT_PARAMS = {

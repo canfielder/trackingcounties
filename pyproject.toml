@@ -3,7 +3,7 @@ name = "tracking-counties"
 version = "0.1.0"
 description = "Streamlit app to track counties visited."
 readme = "README.md"
-requires-python = ">=3.12,<3.13"  # Targets the stable 3.12 range
+requires-python = ">=3.12"
 license = { text = "MIT" }
 authors = [
     { name = "Evan Canfield" }

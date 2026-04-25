@@ -1,8 +1,11 @@
-import sys, pathlib
+import pathlib
+import sys
+
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "src"))
 
 import streamlit as st
 
+from config import NA_DATE
 from scripts.data import import_data
 from scripts.processing import process_data
 
@@ -52,12 +55,11 @@ elif visited_filter == "Not visited":
 # --- Format for display ---
 display_df = display_df[["state_name", "county_name", "geoid", "date", "notes"]].copy()
 display_df["date"] = display_df["date"].apply(
-    lambda d: d.strftime("%B %d, %Y") if hasattr(d, "strftime") and d.year >= 1970 else ""
+    lambda d: d.strftime("%B %d, %Y") if d != NA_DATE else ""
 )
 display_df.columns = ["State", "County", "FIPS", "Date Visited", "Notes"]
 
 # --- Metrics ---
-n_visited = (df["visited"] == 1).sum() if not selected_states else (display_df["Date Visited"] != "").sum()
 m1, m2, m3 = st.columns(3)
 m1.metric("Showing", f"{len(display_df):,}")
 m2.metric("Visited (shown)", f"{(display_df['Date Visited'] != '').sum():,}")
