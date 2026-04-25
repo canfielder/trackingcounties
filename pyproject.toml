@@ -24,8 +24,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "ruff",      # Linting
-    "black",     # Formatting
+    "ruff",
     "cmake",
 ]
 
@@ -34,12 +33,13 @@ app = "streamlit.web.cli:main"
 
 [tool.ruff]
 line-length = 88
-extend-select = ["I"]
 fix = true
 
-[tool.black]
-line-length = 88
-target-version = ["py311"]
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.ruff.format]
+quote-style = "double"
 
 [tool.uv]
 package = false

@@ -1,13 +1,10 @@
 # ---------------------------------------------------------------------------- #
 # IMPORT #
 import geopandas as gpd
-import numpy as np
 import pandas as pd
-
-from shapely.geometry import LineString
-from shapely.ops import split
 from shapely.affinity import translate
-from shapely.ops import unary_union
+from shapely.geometry import LineString
+from shapely.ops import split, unary_union
 
 # ---------------------------------------------------------------------------- #
 # CLASSES / FUNCTIONS #
@@ -37,7 +34,6 @@ def shift_meridian(geo_df, new_centerline):
     gframes = []
 
     for _, row in geo_df.iterrows():
-
         # Extract values
         element = row["geometry"]
 
@@ -47,7 +43,6 @@ def shift_meridian(geo_df, new_centerline):
         # Init
         shifted_parts = []
         for part in split_geoms.geoms:
-
             min_x = part.bounds[0]  # Extract minimum x (longitude)
 
             # Determine the translation direction

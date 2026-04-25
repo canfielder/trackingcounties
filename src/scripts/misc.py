@@ -1,7 +1,6 @@
 ################################################################################
 # SETUP #
 import os
-
 from pathlib import Path
 
 
@@ -50,9 +49,9 @@ def get_project_directory(search_directory=Path.cwd(), root_file="root.txt"):
     >>> print(result)
     """
     # Input Validation
-    assert isinstance(
-        search_directory, Path
-    ), "search_directory must be a pathlib.Path object."
+    assert isinstance(search_directory, Path), (
+        "search_directory must be a pathlib.Path object."
+    )
     assert isinstance(root_file, str), "root_file must be a string."
 
     # Check if the provided search_directory is a valid path

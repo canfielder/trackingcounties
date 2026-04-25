@@ -14,10 +14,10 @@ lint:
 	@echo "🔍 Running Ruff lint..."
 	uv run ruff check src
 
-# Autoformat with Black
+# Autoformat with Ruff
 format:
-	@echo "🎨 Formatting code with Black..."
-	uv run black src
+	@echo "🎨 Formatting code with Ruff..."
+	uv run ruff format src
 
 # Rebuild the environment
 sync:

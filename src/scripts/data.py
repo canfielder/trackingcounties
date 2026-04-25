@@ -5,7 +5,6 @@ import pygris
 
 from paths import DATA_DIR
 
-
 # ---------------------------------------------------------------------------- #
 # CLASSES / FUNCTIONS #
 

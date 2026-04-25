@@ -1,11 +1,11 @@
 # ---------------------------------------------------------------------------- #
 # IMPORT #
 import datetime as dt
+
 import pandas as pd
 import siuba as s
 
-from config import NA_DATE, DATE_FORMAT
-
+from config import DATE_FORMAT, NA_DATE
 
 # ---------------------------------------------------------------------------- #
 # CLASSES / FUNCTIONS #
@@ -90,7 +90,6 @@ def create_state_visited(df_county):
 
 
 def process_data(df_visited, gdf_county, gdf_state):
-
     # Process county visit data
     df_visited_county = process_data_visited(df_visited)
 

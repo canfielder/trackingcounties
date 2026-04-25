@@ -2,8 +2,6 @@
 # IMPORT #
 import datetime as dt
 
-from paths import PROJECT_ROOT
-
 # ---------------------------------------------------------------------------- #
 # VALUES #
 

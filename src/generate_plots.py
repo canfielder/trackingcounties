@@ -3,9 +3,8 @@
 
 from config import EPSG_CODE, NON_CONTIGUOUS_CODES, PLOT_PARAMS
 from scripts.data import import_data
-from scripts.plotting import generate_plot_data, Plot
+from scripts.plotting import Plot, generate_plot_data
 from scripts.processing import process_data
-
 
 # ---------------------------------------------------------------------------- #
 # CLASSES / FUNCTIONS #
@@ -33,7 +32,6 @@ def tracking_counties(print_plot=True, save_plot=True):
 
     # Generate plots
     for plot_label in dct_plot["county"].keys():
-
         plotter(plot_label=plot_label, save_plot=save_plot, print_plot=print_plot)
 
 

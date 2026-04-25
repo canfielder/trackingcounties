@@ -1,10 +1,10 @@
 # ---------------------------------------------------------------------------- #
 # IMPORT #
+
 import pandas as pd
-import pathlib as pl
 import plotnine as p9
-from pygris.utils import shift_geometry
 import siuba as s
+from pygris.utils import shift_geometry
 
 from paths import PROJECT_ROOT
 from scripts.mapping import adjust_crs, shift_meridian
@@ -14,7 +14,6 @@ from scripts.mapping import adjust_crs, shift_meridian
 
 
 def generate_plot_data(gdf_county, gdf_state, non_contiguous_codes, epsg_code):
-
     # Init
     dct_plot = {"state": {}, "county": {}}
 
@@ -124,7 +123,6 @@ class Plot:
             print(p)
 
     def generate_plot(self, plot_label):
-
         # Ensure visited is Categorical so discrete scales work regardless of
         # how the data was cached or serialized upstream.
         county_data = self.plot_tables["county"][plot_label].copy()
