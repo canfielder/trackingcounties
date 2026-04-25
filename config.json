@@ -22,7 +22,7 @@
                 "fillOpacity": 0.5
             },
             "not_visited": {
-                "fillColor": "F4F6F6", 
+                "fillColor": "#F4F6F6",
                 "color": "#717d7e", 
                 "weight": 1, 
                 "fillOpacity": 0

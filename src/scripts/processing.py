@@ -11,20 +11,23 @@ from config import DATE_FORMAT, NA_DATE
 # CLASSES / FUNCTIONS #
 
 
-def verify_visit(date_input):
-    if date_input >= dt.datetime(1970, 1, 1):
-        visited = 1
-    else:
-        visited = 0
-    return visited
+def verify_visit(date_input: dt.datetime) -> int:
+    """Return 1 if the date represents a real visit, 0 if it is the NA sentinel."""
+    return 0 if date_input == NA_DATE else 1
 
 
-def parse_dates(date, na_date, date_format=DATE_FORMAT):
+def parse_dates(
+    date: str | None,
+    na_date: dt.datetime,
+    date_format: str = DATE_FORMAT,
+) -> dt.datetime:
+    """Parse a date string into a datetime, returning na_date on failure."""
     if isinstance(date, str):
-        output = dt.datetime.strptime(date, date_format)
-    else:
-        output = na_date
-    return output
+        try:
+            return dt.datetime.strptime(date, date_format)
+        except ValueError:
+            return na_date
+    return na_date
 
 
 def convert_visited_to_categorical(df):
