@@ -10,7 +10,7 @@ authors = [
 ]
 
 dependencies = [
-    "streamlit==1.50.0",
+    "streamlit>=1.54.0",
     "siuba==0.4.2",
     "pandas==2.3.3",
     "numpy==2.3.4",
@@ -20,6 +20,9 @@ dependencies = [
     "geopandas>=1.1.2",
     "plotnine>=0.15.3",
     "pygris>=0.2.1",
+    "pillow>=12.2.0",
+    "requests>=2.33.0",
+    "tornado>=6.5.5",
 ]
 
 [project.optional-dependencies]
