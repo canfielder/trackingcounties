@@ -16,6 +16,8 @@ st.set_page_config(page_title="Static Plots", layout="wide")
 
 PLOT_LABELS = {
     "us_inset": "United States",
+    "alaska": "Alaska",
+    "hawaii": "Hawaii",
     "north_carolina": "North Carolina",
     "north_carolina_w_adjacent_states": "North Carolina & Adjacent States",
 }
