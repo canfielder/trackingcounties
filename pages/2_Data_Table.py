@@ -28,7 +28,7 @@ df, counties, states = load_data()
 st.header("Data Table")
 
 # --- Filters ---
-col_state, col_visited = st.columns(2)
+col_state, col_visited, col_year = st.columns(3)
 
 with col_state:
     all_states = sorted(df["state_name"].unique())
@@ -41,6 +41,16 @@ with col_visited:
         horizontal=True,
     )
 
+with col_year:
+    visit_years = sorted(df[df["visited"] == 1]["date"].apply(lambda d: d.year).unique())
+    year_range = st.slider(
+        "Year visited",
+        min_value=visit_years[0],
+        max_value=visit_years[-1],
+        value=(visit_years[0], visit_years[-1]),
+        disabled=(visited_filter == "Not visited"),
+    )
+
 # --- Apply filters ---
 display_df = df.copy()
 
@@ -51,6 +61,15 @@ if visited_filter == "Visited":
     display_df = display_df[display_df["visited"] == 1]
 elif visited_filter == "Not visited":
     display_df = display_df[display_df["visited"] == 0]
+
+if visited_filter == "Visited":
+    year = display_df["date"].apply(lambda d: d.year)
+    display_df = display_df[year.between(int(year_range[0]), int(year_range[1]))]
+
+# Sort: visited first, then most recent → oldest; unvisited fall to the bottom
+display_df = display_df.sort_values(
+    ["visited", "date"], ascending=[False, False]
+).reset_index(drop=True)
 
 # --- Format for display ---
 display_df = display_df[["state_name", "county_name", "geoid", "date", "notes"]].copy()
