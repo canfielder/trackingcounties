@@ -55,6 +55,25 @@ src/scripts/processing.py  process_data() — joins visits onto county/state Geo
 - **Non-contiguous codes** (`NON_CONTIGUOUS_CODES`) exclude AK, HI, and territories from the contiguous US plot; Alaska gets meridian-shifted to keep Aleutians contiguous
 - Shapefiles are fetched from the Census via `pygris` and cached in `~/.cache/pygris`
 
+## Data entry
+
+**Adding counties from a trip:**
+
+1. Create a trip log in `data/trips/` named `YYYY-MM-DD__short-description.md` (date = first day of trip):
+   ```markdown
+   # Trip Overview
+   ## Summary
+   - One-line description
+
+   **States:** State1, State2
+
+   ## Counties
+   ### YYYY-MM-DD
+   * County, ST
+   ```
+2. Update `data/tables/list_of_counties_active.csv` for each new county — set `date` to the county's first appearance in the trip log and add a short `notes` entry referencing the trip.
+3. Skip counties that already have a date recorded.
+
 ## CI/CD
 
 `.github/workflows/update-plots.yml` triggers on push to `master` when `data/tables/list_of_counties_active.csv` changes (or via `workflow_dispatch`). It runs `generate_plots.py` and commits the updated PNGs back to the repo with `[skip ci]`.
